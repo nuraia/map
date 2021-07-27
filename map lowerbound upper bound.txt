@@ -1,0 +1,139 @@
+ For a dictionary M that stores elements formed by a pair of a string key and an integer value, perform a sequence of the following operations. Note that each key in M must be unique.
+
+    insert(key, x): Insert an element formed by a pair of key and x to M.
+    get(key): Print the value with the specified key. Print 0 if there is no such element.
+    delete(key): Delete the element with the specified key.
+    dump(L, R): Print all elements formed by a pair of the key and the value such that the key is greater than or equal to L and less than or equal to R in lexicographic order.
+
+Input
+
+The input is given in the following format.
+
+q
+query1
+query2
+:
+queryq
+
+Each query queryi is given by
+
+0 key x
+
+or
+
+1 key
+
+or
+
+2 key
+
+or
+
+3 L R
+
+where the first digits 0, 1, 2 and 3 represent insert, get, delete and dump operations.
+Output
+
+For each get operation, print the corresponding value.
+For each dump operation, print the corresponding elements formed by a pair of the key and the value. For the dump operation, print the elements (a pair of key and value separated by a space character) in ascending order of the keys.
+Constraints
+
+    1 q 200,000
+    1 x 1,000,000,000
+    1 length of key 20
+    key consists of lower-case letters
+    L R in lexicographic order
+    The total number of elements printed by dump operations does not exceed 1,000,000
+
+Sample Input 1
+
+9
+0 blue 4
+0 red 1
+0 white 5
+1 red
+1 blue
+2 red
+1 black
+1 red
+3 w z
+
+Sample Output 1
+
+1
+4
+0
+0
+white 5
+
+sol:
+
+
+#include <iostream>
+#include <map>
+#include <algorithm>
+#include <iterator>
+#define INF INT_MAX
+
+#define ll long long
+
+#define pb push_back
+
+#define M 1000000007
+
+#define fast()                        \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);
+using namespace std;
+
+int main()
+{
+    fast();
+    ll t;
+    cin >> t;
+    map<string, int> yop;
+    while (t--)
+    {
+        ll x;
+        cin >> x;
+        if (x == 0)
+        {
+            string a;
+            cin >> a;
+            int b;
+            cin >> b;
+            yop[a] = b;
+        }
+        else if (x == 1)
+        {
+            string a;
+            cin >> a;
+            cout << yop[a] << endl;
+            if (yop[a] == 0)
+            {
+                yop.erase(a);
+            }
+        }
+
+        else if (x == 2)
+        {
+            string a;
+            cin >> a;
+            yop.erase(a);
+        }
+        else
+        {
+            string a, b;
+            cin >> a >> b;
+        auto i =yop.lower_bound(a);
+        auto t=yop.upper_bound(b);
+       while(i!=t){
+
+            cout << i->first << " " << i->second << endl;
+            i++;
+        }
+        }
+    }
+ 
+return 0;
+}
